@@ -1,0 +1,1 @@
+﻿Console.WriteLine("Modern Programming Course\r\n\r\nStudent: Скляров Федiр Євгенович\r\nGroup: 401-ТК\r\n\r\nVariant: 2\r\nDomain: FitnessTracker\r\n\r\n.NET: 10\r\n");
