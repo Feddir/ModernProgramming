@@ -2,12 +2,19 @@
 using FitnessTracker.Domain;
 using FitnessTracker.Domain.Interface;
 
-var athlete = new Athlete("Олександр");
-var workout = new Workout("День ніг");
+var target = new ExerciseTarget("Присідання зі штангою", 10, null);
 
-var squat = new Exercise("Присідання зі штангою");
-squat.AddSet(100.0, 10);
-squat.AddSet(110.0, 8);
+var athlete = new Athlete
+{
+    Name = "Олександр",
+    Email = "alex.fitness@gmail.com",
+    Notes = "Звернути увагу на розминку колін."
+};
+
+var workout = new Workout("День ніг");
+var squat = new Exercise(target.ExerciseName);
+squat.AddSet(120.0, 10);
+squat.AddSet(130.0, 8);
 
 workout.AddExercise(squat);
 athlete.AddWorkout(workout);
@@ -16,12 +23,16 @@ workout.Start();
 workout.Complete();
 
 IWorkoutMetricCalculator volumeCalculator = new StrengthVolumeCalculator();
-IWorkoutMetricCalculator repCalculator = new RepetitionCalculator();
-
 double totalVolume = volumeCalculator.Calculate(workout);
-double totalReps = repCalculator.Calculate(workout);
 
-Console.WriteLine($"Атлет: {athlete.Name}");
-Console.WriteLine($"Тренування: {workout.Title} [Статус: {workout.Status}]");
-Console.WriteLine($"Загальний об'єм піднятої ваги: {totalVolume} кг");
-Console.WriteLine($"Загальна кількість повторень: {totalReps}");
+Console.WriteLine($"Атлет: {athlete.Name} ({athlete.Email})");
+if (athlete.Notes != null)
+{
+    Console.WriteLine($"Нотатки: {athlete.Notes}");
+}
+
+Console.WriteLine($"Ціль: {target.ExerciseName} (Цільові повторення: {target.TargetRepetitions})");
+Console.WriteLine($"Тренування: {workout.Title}");
+Console.WriteLine($"Статус (Switch 1): {workout.GetWorkoutStatusDescription()}");
+Console.WriteLine($"Загальний об'єм: {totalVolume} кг");
+Console.WriteLine($"Категорія об'єму (Switch 2 + Property/Relational Pattern): {workout.EvaluateVolumeCategory(totalVolume)}");
