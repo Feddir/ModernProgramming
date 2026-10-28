@@ -4,15 +4,13 @@ namespace FitnessTracker.Domain
 
     public class Athlete
     {
-        public string Name { get; }
+        public required string Name { get; init; }
+        public required string Email { get; init; }
 
-        private readonly List<Workout> _workouts = new List<Workout>();
+        public string? Notes { get; init; }
+
+        private readonly List<Workout> _workouts = new();
         public IReadOnlyCollection<Workout> Workouts => _workouts.AsReadOnly();
-
-        public Athlete(string name)
-        {
-            Name = name;
-        }
 
         public void AddWorkout(Workout workout)
         {

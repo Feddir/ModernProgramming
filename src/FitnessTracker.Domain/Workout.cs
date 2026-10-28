@@ -5,7 +5,7 @@ namespace FitnessTracker.Domain
 {
     public class Workout
     {
-        public string Title { get; }
+        public string Title { get; init; }
         public WorkoutStatus Status { get; private set; } = WorkoutStatus.Planned;
 
         private readonly List<Exercise> _exercises = new List<Exercise>();
@@ -47,6 +47,21 @@ namespace FitnessTracker.Domain
 
             Status = WorkoutStatus.Cancelled;
         }
-    }
 
+        public string GetWorkoutStatusDescription() => Status switch
+        {
+            WorkoutStatus.Planned => "Заплановане тренування",
+            WorkoutStatus.InProgress => "Тренування триває",
+            WorkoutStatus.Completed => "Тренування успішно завершено",
+            WorkoutStatus.Cancelled => "Тренування скасовано",
+             _ => "Невідомий статус"
+        };
+
+        public string EvaluateVolumeCategory(double totalVolume) => this switch
+        {
+            { Status: WorkoutStatus.Completed } when totalVolume >= 5000 => "HighVolumeWorkout",
+            _ when totalVolume >= 1000 => "MediumVolumeWorkout",
+            _ => "LightVolumeWorkout"
+        };
+    }
 }
