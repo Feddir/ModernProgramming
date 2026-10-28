@@ -3,7 +3,7 @@ namespace FitnessTracker.Domain
 {
     public class Exercise
     {
-        public string Name { get; }
+        public string Name { get; init; }
 
         private readonly List<ExerciseSet> _sets = new List<ExerciseSet>();
         public IReadOnlyCollection<ExerciseSet> Sets => _sets.AsReadOnly();

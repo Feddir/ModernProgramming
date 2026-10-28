@@ -3,8 +3,8 @@ namespace FitnessTracker.Domain
 {
     public class ExerciseSet
     {
-        public double Weight { get; }
-        public int Repetitions { get; }
+        public double Weight { get; init; }
+        public int Repetitions { get; init; }
 
         public ExerciseSet(double weight, int repetitions)
         {
