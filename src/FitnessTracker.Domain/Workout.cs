@@ -10,7 +10,7 @@ namespace FitnessTracker.Domain
 
         private readonly List<Exercise> _exercises = new List<Exercise>();
         public IReadOnlyCollection<Exercise> Exercises => _exercises.AsReadOnly();
-
+        public event Action<Workout>? WorkoutCompleted;
         public Workout(string title)
         {
             Title = title;
@@ -38,6 +38,7 @@ namespace FitnessTracker.Domain
                 throw new InvalidOperationException("Можна завершити лише тренування, яке зараз виконується.");
 
             Status = WorkoutStatus.Completed;
+            WorkoutCompleted?.Invoke(this);
         }
 
         public void Cancel()
